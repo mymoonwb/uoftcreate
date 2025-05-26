@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--Information-->
+
+    <meta charset="utf-8" />
+    <title>CCEM</title>
+    <meta name="description" content="CCEM" />
+    <!--A-Frame-->
+
+    <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
+
+    <!--animation component script-->
+   <script src="https://unpkg.com/aframe-animation-component@^4.1.2/dist/aframe-animation-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script>
+    
+    <!--Scene Changer-->
+
+   <script>
+      AFRAME.registerComponent('infogroup',{
+        init:function(){
+            this.el.addEventListener('reloadinfo',function(evt){
+            //alert(evt.detail.currinfo+"   "+evt.detail.newinfo);
+            //get the entire current spot group and scale it to 0
+            var currinfogroup=document.getElementById(evt.detail.currinfo);
+            currinfogroup.setAttribute("scale","0 0 0");
+            
+            //get the entire new spot group and scale it to 1
+            var newinfogroup=document.getElementById(evt.detail.newinfo);
+            newinfogroup.setAttribute("scale","1 1 1");
+          });
+        }
+      });
+      AFRAME.registerComponent('infoicon',{
+        schema:{
+          linkto:{type:"string",default:""},
+          infogroup:{type:"string",default:""}
+        },
+        init:function(){
+          
+          //add image source of hotspot icon
+          this.el.setAttribute("src","#info-icon");
+          //resize
+          this.el.setAttribute("scale","0.5 0.5 0.5");
+          //make the icon look at the camera all the time
+          this.el.setAttribute("look-at","#cam");
+          
+          var data=this.data;
+          
+          this.el.addEventListener('click',function(){
+            this.setAttribute("scale","2.5 1.25 1");
+            this.setAttribute("src",data.infolink);
+          });
+          this.el.addEventListener('mouseleave',function(){
+            this.setAttribute("scale","0.5 0.5 0.5");
+            this.setAttribute("src","#info-icon");
+            
+            var cur=document.getElementById("cursor-visual");
+            cur.emit("stopFuse");
+          });
+          this.el.addEventListener('mouseenter', function (evt) {
+            var cur=document.getElementById("cursor-visual");
+            cur.emit("startFuse");
+            
+          });
+        }
+      });
+      
+      
+      AFRAME.registerComponent('hotspots',{
+        init:function(){
+            this.el.addEventListener('reloadspots',function(evt){
+            
+            //get the entire current spot group and scale it to 0
+            var currspotgroup=document.getElementById(evt.detail.currspots);
+            currspotgroup.setAttribute("scale","0 0 0");
+            
+            //get the entire new spot group and scale it to 1
+            var newspotgroup=document.getElementById(evt.detail.newspots);
+            newspotgroup.setAttribute("scale","1 1 1");
+          });
+        }
+      });
+      
+      
+      function loadNewSpotDetails()
+      {
+        
+        //set the skybox source to the new image as per the spot
+          var sky=document.getElementById("skybox");
+          sky.setAttribute("src",ndata.linkto);
+            
+          var spotcomp=document.getElementById("spots");
+          var currspots=nthis.parentElement.getAttribute("id");
+          //create event for spots component to change the spots data
+          spotcomp.emit('reloadspots',{newspots:ndata.spotgroup,currspots:currspots});
+
+
+          var infocomp=document.getElementById("infos");
+          var currinfo=ndata.infoparent;
+          //create event for spots component to change the spots data
+          infocomp.emit('reloadinfo',{currinfo:currinfo,newinfo:ndata.infogroup});  
+          
+          //var ncam=document.getElementById("cam");
+          //this.setAttribute("camera","fov",80);
+          this.emit("zoomout");
+        
+          var fp=document.getElementById("camfadeplane");
+          fp.emit("camFadeOut");
+        
+      }
+      var ndata;
+      var nthis;
+      
+      
+      AFRAME.registerComponent('spot',{
+        schema:{
+          linkto:{type:"string",default:""},
+          spotgroup:{type:"string",default:""},
+          infogroup:{type:"string",default:""},
+          infoparent:{type:"string",default:""}
+        },
+        init:function(){
+          
+          //add image source of hotspot icon
+          this.el.setAttribute("src","#hotspot");
+          //make the icon look at the camera all the time
+          this.el.setAttribute("look-at","#cam");
+          
+          var data=this.data;
+          
+          this.el.addEventListener('click',function(){
+            ndata=data;
+            nthis=this;
+            
+            var cam=document.getElementById("cam");
+            cam.emit("zoomin");
+            
+            var fp=document.getElementById("camfadeplane");
+            fp.emit("camFadeIn");
+            //alert("Start zoom");
+          });
+          this.el.addEventListener('mouseleave',function(){
+            var cur=document.getElementById("cursor-visual");
+            cur.emit("stopFuse");
+          });
+          this.el.addEventListener('mouseenter', function (evt) {
+            var cur=document.getElementById("cursor-visual");
+            cur.emit("startFuse");
+          });
+        }
+      });
+      
+    </script>
+    
+  </head>
+  <body>
+    <a-scene
+      background="color: #FAFAFA"
+      inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js"
+    >
+      <!--Assets-->
+
+      <a-assets>
+        <!--Rooms-->
+
+        <img
+          id="room1"
+          src="https://cdn.glitch.com/caaef0b9-b2ee-4c4b-aa5c-539b475c81b0%2F1.insp?v=1616375257812"
+        />
+        <img
+          id="room2"
+          src="https://cdn.glitch.com/8725f370-c2f6-4c14-83ad-39fe5e61a18e%2F2.insp?v=1616449573804"
+        />
+        <img
+          id="room3"
+          src="https://cdn.glitch.com/8725f370-c2f6-4c14-83ad-39fe5e61a18e%2F3.insp?v=1616631753819"
+        />
+        <img
+          id="room4"
+          src="https://cdn.glitch.com/8725f370-c2f6-4c14-83ad-39fe5e61a18e%2F4.insp?v=1616509712734"
+        />
+        <img
+          id="room6"
+          src="https://cdn.glitch.com/8725f370-c2f6-4c14-83ad-39fe5e61a18e%2F10.insp?v=1616631784448"
+        />
+
+        <img
+          id="room7"
+          src="https://cdn.glitch.com/8725f370-c2f6-4c14-83ad-39fe5e61a18e%2Froom9.insp?v=1622298123601
+
+"
+        />
+        <img
+          id="room8"
+          src="https://cdn.glitch.com/8725f370-c2f6-4c14-83ad-39fe5e61a18e%2Fsem_1_2.insp?v=1616639649657
+"
+        />
+        <img
+          id="room9"
+          src="https://cdn.glitch.com/8725f370-c2f6-4c14-83ad-39fe5e61a18e%2Fsem_1_1.insp?v=1616639649706
+               
+"
+        />
+
+        <!--Buttons-->
+
+        <img
+          id="hotspot"
+          src="https://cdn.glitch.com/8725f370-c2f6-4c14-83ad-39fe5e61a18e%2Ficons8-arrow-64.png?v=1622385337188"
+        />
+        <img
+          id="info-icon"
+          src=" "
+        />
+
+        <!-- information -->
+        <img
+          id="info1"
+          src="https://cdn.glitch.com/8725f370-c2f6-4c14-83ad-39fe5e61a18e%2F1.png?v=1617367746810"
+        />
+        <img
+          id="info2"
+          src="https://cdn.glitch.com/8725f370-c2f6-4c14-83ad-39fe5e61a18e%2F2.png?v=1617368320450"
+        />
+      </a-assets>
+
+      <!-- room teleport hotspots -->
+      <a-entity id="spots" hotspots>
+        a
+
+        <!--room 1-->
+
+        <a-entity id="group-room1">
+          <a-image
+            spot="linkto:#room2;spotgroup:group-room2;infogroup:infogroup-room2;infoparent:infogroup-room1"
+            position="10 0 0"
+          ></a-image>
+        </a-entity>
+
+        <!--room 2-->
+
+        <a-entity id="group-room2" scale="0 0 0">
+          <a-image
+            spot="linkto:#room1;spotgroup:group-room1;infogroup:infogroup-room1;infoparent:infogroup-room2"
+            position="0 0 10"
+          >
+          </a-image>
+          <a-image
+            spot="linkto:#room3;spotgroup:group-room3;infogroup:infogroup-room3;infoparent:infogroup-room2"
+            position="1 0 -9"
+          >
+          </a-image>
+        </a-entity>
+        <!--room 3-->
+
+        <a-entity id="group-room3" scale="0 0 0">
+          <a-image
+            spot="linkto:#room2;spotgroup:group-room2;infogroup:infogroup-room2;infoparent:infogroup-room3"
+            position="0 0 10"
+          ></a-image>
+          <a-image
+            spot="linkto:#room4;spotgroup:group-room4;infogroup:infogroup-room4;infoparent:infogroup-room3"
+            position="0 0 -9"
+          ></a-image>
+        </a-entity>
+
+        <!--room 4-->
+
+        <a-entity id="group-room4" scale="0 0 0">
+          <a-image
+            spot="linkto:#room7;spotgroup:group-room7;infogroup:infogroup-room7;infoparent:infogroup-room4"
+            position="0 0 -10"
+          ></a-image>
+          <a-image
+            spot="linkto:#room3;spotgroup:group-room3;infogroup:infogroup-room3;infoparent:infogroup-room4"
+            position="0 0 10"
+          ></a-image>
+        </a-entity>
+
+        <!--room 6-->
+
+        <!--room 7-->
+
+        <a-entity id="group-room7" scale="0 0 0">
+          <a-image
+            spot="linkto:#room8;spotgroup:group-room8;infogroup:infogroup-room8;infoparent:infogroup-room7"
+            position="0 0 -10"
+          ></a-image>
+          <a-image
+            spot="linkto:#room6;spotgroup:group-room6;infogroup:infogroup-room6;infoparent:infogroup-room7"
+            position="10 0 0"
+          ></a-image>
+        </a-entity>
+
+        <!--room 8-->
+
+        <a-entity id="group-room8" scale="0 0 0">
+          <a-image
+            spot="linkto:#room7;spotgroup:group-room7;infogroup:infogroup-room7;infoparent:infogroup-room8"
+            position="10 0 0"
+          ></a-image>
+          <a-image
+            spot="linkto:#room9;spotgroup:group-room9;infogroup:infogroup-room9;infoparent:infogroup-room8"
+            position="-10 0 0"
+          ></a-image>
+        </a-entity>
+
+        <a-entity id="group-room9" scale="0 0 0">
+          <a-image
+            spot="linkto:#room8;spotgroup:group-room8;infogroup:infogroup-room8;infoparent:infogroup-room9"
+            position="-10 0 -5"
+          ></a-image>
+        </a-entity>
+
+        <!--room 9-->
+      </a-entity>
+
+           <!-- info spots -->
+      <a-entity id="infos" infogroup>
+        <a-entity id="infogroup-room1">
+          <a-image infoicon="infolink:#info1" position=" "></a-image>
+        </a-entity>
+        <a-entity id="infogroup-room2" scale="0 0 0">
+          <a-image infoicon="infolink:#info4" position=" "></a-image>
+        </a-entity>
+        <a-entity id="infogroup-room3" scale="0 0 0">
+          <a-image infoicon="infolink:#info2" position=" "></a-image>
+          <a-image infoicon="infolink:#info4" position=" "></a-image>
+        </a-entity>
+        <a-entity id="infogroup-room4" scale="0 0 0">
+          <a-image infoicon="infolink:#info3" position=" "></a-image>
+        </a-entity>
+      </a-entity>
+      
+      <a-entity id="cam" camera="fov:80" position="0 1.6 0" look-controls
+                animation__zoomin="property:camera.fov;dur:2000;to:50;startEvents:zoomin;"
+                animation__zoomout="property:camera.fov;dur:1000;to:80;startEvents:zoomout;">
+        
+        <a-entity id="cursor-visual" cursor="fuse:true;fuseTimeout:2000" 
+                  material="shader:flat;color:#09B4FF" 
+                  position="0 0 -1" 
+                  geometry="primitive: ring; radiusInner: 0.01; radiusOuter: 0.015;thetaLength:0"
+                  animation__mouseenter="property: geometry.thetaLength; dir: alternate; dur: 2000;
+                                easing: easeInSine; from:0;to: 360;startEvents:startFuse;pauseEvents:stopFuse;autoplay:false"
+                  
+                  animation__mouseleave="property: geometry.thetaLength; dir: alternate; dur: 500;
+                                easing: easeInSine; to: 0;startEvents:stopFuse;autoplay:false">
+          <a-entity geometry="primitive:ring;radiusOuter:0.015;radiusInner:0.01" material="shader:flat;color:#000000"></a-entity>
+        </a-entity>
+        <a-plane id="camfadeplane" rotation="10 0.5 0" position="0 0 -0.5" material="color:#000000;transparent:true;opacity:0" width="2" height="2"
+                 animation__fadein="property:material.opacity;to:1;dur:2000;startEvents:camFadeIn"
+                 animation__fadeout="property:material.opacity;to:0;dur:200;startEvents:camFadeOut"></a-plane>
+      </a-entity>
+      <a-sky id="skybox" src="#room1"></a-sky>
+    </a-scene>
+    <script>
+      var ccam=document.getElementById("cam");
+      ccam.addEventListener("animationcomplete",loadNewSpotDetails);
+    </script>
+  </body>
+</html>
