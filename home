@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Virtual Reality @ CREATE</title>
+  <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+  <script src="https://rawgit.com/ngokevin/aframe-event-set-component/master/dist/aframe-event-set-component.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+    header {
+      background: #007acc;
+      color: white;
+      padding: 1em;
+      text-align: center;
+    }
+    nav {
+      background: #e6e6e6;
+      padding: 1em;
+    }
+    nav a {
+      margin-right: 15px;
+      text-decoration: none;
+      color: #007acc;
+      font-weight: bold;
+    }
+    section {
+      padding: 1em;
+      margin: 1em;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 1em;
+      overflow-x: auto;
+      border-left: 4px solid #007acc;
+    }
+    code {
+      white-space: pre-wrap;
+      display: block;
+    }
+    h2 {
+      border-bottom: 2px solid #007acc;
+      padding-bottom: 0.25em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Virtual Reality @ CREATE</h1>
+  </header>
+
+  <nav>
+    <a href="#snippet1">A-Frame Setup</a>
+    <a href="#snippet2">Loop Example (JavaScript)</a>
+    <a href="#snippet3">Basic HTML</a>
+    <a href="#snippet4">Primitives</a>
+    <a href="#snippet5">2D Elements in A-Frame</a>
+    <a href="#snippet6">3D Elements</a>
+    <a href="#snippet7">Moving Camera</a>
+    <a href="#snippet8">Interaction Source Code</a>
+    <a href="#snippet9">Changing Object</a>
+    <a href="#snippet10">Gaze Based Interaction</a>
+  </nav>
+
+  <main>
+    <section id="snippet1">
+      <h2>A-Frame Basic Structure</h2>
+      <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;script src=&quot;https://aframe.io/releases/1.7.0/aframe.min.js&quot;&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;a-scene&gt;&lt;/a-scene&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    </section>
+
+    
+    <section id="snippet3">
+      <h2>Basic HTML Page</h2>
+      <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;My Page&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello, world!&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    </section>
+
+    <section id="snippet4">
+      <h2>Primitive Shapes in A-Frame</h2>
+      <pre><code>&lt;a-entity geometry="primitive: box" material="color: blue"&gt;&lt;/a-entity&gt;
+&lt;a-entity geometry="primitive: sphere" material="color: red"&gt;&lt;/a-entity&gt;
+&lt;a-entity geometry="primitive: cylinder" material="color: green"&gt;&lt;/a-entity&gt;
+&lt;a-entity geometry="primitive: cone" material="color: yellow"&gt;&lt;/a-entity&gt;</code></pre>
+      <h3>Rotations, Scale, and Color</h3>
+      <pre><code>&lt;a-scene&gt;
+  &lt;a-plane material="color: #FFFFFF" rotation="-90 0 0" scale="10 10 1"&gt;&lt;/a-plane&gt;
+&lt;/a-scene&gt;</code></pre>
+    </section>
+
+    <section id="snippet5">
+      <h2>2D Elements in A-Frame</h2>
+      <pre><code>&lt;a-scene&gt;
+  &lt;a-assets&gt;
+    &lt;img id="CREATEISAWESOME" src="user/CREATE/MoonIsSoCool.jpg"&gt;
+  &lt;/a-assets&gt;
+  &lt;a-image src="#CREATEISAWESOME" position="0 1.5 -3" width="1" height="1" scale="1 1 1"&gt;&lt;/a-image&gt;
+&lt;/a-scene&gt;</code></pre>
+    </section>
+
+    <section id="snippet6">
+      <h2>3D Elements</h2>
+      <pre><code>&lt;a-scene&gt;
+  &lt;a-assets&gt;
+    &lt;a-asset-item id="moonHeads" src="user/iLoveEngineering.gltf"&gt;&lt;/a-asset-item&gt;
+  &lt;/a-assets&gt;
+  &lt;a-entity gltf-model="#moonHeads"&gt;&lt;/a-entity&gt;
+&lt;/a-scene&gt;</code></pre>
+    </section>
+
+    <section id="snippet7">
+      <h2>Moving Camera</h2>
+      <pre><code>&lt;a-scene&gt;
+  &lt;a-entity position="0 1.6 0"&gt;
+    &lt;a-camera&gt;&lt;/a-camera&gt;
+  &lt;/a-entity&gt;
+&lt;/a-scene&gt;</code></pre>
+    </section>
+
+    <section id="snippet8">
+      <h2>Interaction Source Code</h2>
+      <pre><code>&lt;html&gt;
+  &lt;head&gt;
+    &lt;script src="https://aframe.io/releases/1.7.0/aframe.min.js"&gt;&lt;/script&gt;
+    &lt;script src="https://rawgit.com/ngokevin/aframe-event-set-component/master/dist/aframe-event-set-component.min.js"&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;a-scene&gt;
+      &lt;a-box color="#FFFFFF" event-set__enter="_event: mouseenter; material.color: #FF080F"&gt;&lt;/a-box&gt;
+    &lt;/a-scene&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    </section>
+
+    <section id="snippet9">
+      <h2>Changing Object</h2>
+      <pre><code>&lt;a-scene&gt;
+  &lt;a-box color="#FFFFFF" id="whiteBox"&gt;&lt;/a-box&gt;
+  &lt;a-box event-set__tarcol="_event: click; _target: #whiteBox; material.color: #00AAFF"&gt;&lt;/a-box&gt;
+  &lt;a-box event-set__tarpos="_event: click; _target: #whiteBox; position: 2 3 5"&gt;&lt;/a-box&gt;
+&lt;/a-scene&gt;</code></pre>
+    </section>
+
+    <section id="snippet10">
+      <h2>Gaze Based Interaction</h2>
+      <pre><code>&lt;a-scene&gt;
+  &lt;a-camera&gt;
+    &lt;a-entity cursor="fuse: true" position="0 0 -1"&gt;&lt;/a-entity&gt;
+  &lt;/a-camera&gt;
+
+  &lt;a-box color="#FFFFFF" id="whiteBox"&gt;&lt;/a-box&gt;
+  &lt;a-box event-set__tarcol="_event: click; _target: #whiteBox; material.color: #00AAFF"&gt;&lt;/a-box&gt;
+  &lt;a-box event-set__tarpos="_event: click; _target: #whiteBox; position: 2 3 5"&gt;&lt;/a-box&gt;
+&lt;/a-scene&gt;</code></pre>
+    </section>
+  </main>
+</body>
+</html>
