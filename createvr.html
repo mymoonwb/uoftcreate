@@ -54,7 +54,7 @@
   </style>
 </head>
 <body>
-<header style="display: flex; align-items: center; justify-content: space-between; padding: 10px;">
+<header style="display: flex; align-items: center; justify-content: space-between; padding: 10px; background-color: #FFF3B0;">
   <h1 style="margin: 0; color: #00204E;">Virtual Reality @ CREATE</h1>
   <img src="https://civmin.utoronto.ca/wp-content/uploads/2023/04/logo.png" alt="UofT Logo" style="height: 60px;">
 </header>
@@ -70,6 +70,7 @@
     <a href="#snippet9">Changing Object</a>
     <a href="#snippet10">Gaze Based Interaction</a>
     <a href="#snippet11">VR Room Solution</a>
+    <a href="#snippet12">VR Museum</a> 
   </nav>
 
   <main>
@@ -179,7 +180,7 @@
     </section>
 
     <section id="snippet11">
-  <h2>Scene with Primitive Shapes and Ground Plane</h2>
+  <h2>VR Room</h2>
   <pre><code>&lt;a-scene&gt;
   &lt;a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"&gt;&lt;/a-box&gt;
   &lt;a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"&gt;&lt;/a-sphere&gt;
@@ -194,6 +195,66 @@
     <li><code>&lt;a-sky&gt;</code> gives the background color to the scene.</li>
   </ul>
 </section>
+
+    <section id="snippet12">
+  <h2>VR Museum</h2>
+  <pre><code>&lt;html&gt;
+  &lt;head&gt;
+    &lt;script src="https://aframe.io/releases/1.7.1/aframe.min.js"&gt;&lt;/script&gt;
+    &lt;script&gt;
+      AFRAME.registerComponent('toggle-text-on-click', {
+        schema: { type: 'string' },
+        init: function () {
+          const textId = this.data;
+          const textEntity = document.querySelector(`#${textId}`);
+          const allTexts = document.querySelectorAll('.toggle-text');
+
+          this.el.addEventListener('click', () =&gt; {
+            allTexts.forEach(t =&gt; t.setAttribute('visible', false));
+            const currentlyVisible = textEntity.getAttribute('visible');
+            textEntity.setAttribute('visible', !currentlyVisible);
+          });
+        }
+      });
+    &lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;a-scene&gt;
+      &lt;a-assets&gt;
+        &lt;img id="img1" src="image_link_here"&gt;
+        ...
+        &lt;img id="Floor" src="floor_image_link"&gt;
+        &lt;img id="Wall" src="wall_texture_link"&gt;
+        &lt;img id="Frame" src="frame_texture_link"&gt;
+      &lt;/a-assets&gt;
+
+      &lt;a-box src="#img1" toggle-text-on-click="text-box1" class="clickable" ...&gt;&lt;/a-box&gt;
+      &lt;a-text id="text-box1" value="Artwork Info" class="toggle-text" visible="false" ...&gt;&lt;/a-text&gt;
+
+      &lt;a-plane src="#Floor" position="0 0 -4" rotation="-90 0 0" width="20" height="20"&gt;&lt;/a-plane&gt;
+      &lt;a-plane src="#Wall" position="0 3.5 -14" width="20" height="7"&gt;&lt;/a-plane&gt;
+      &lt;a-sky src="sky_image_link"&gt;&lt;/a-sky&gt;
+
+      &lt;a-entity id="player" position="0 1.6 0"&gt;
+        &lt;a-camera wasd-controls look-controls&gt;
+          &lt;a-cursor&gt;&lt;/a-cursor&gt;
+        &lt;/a-camera&gt;
+      &lt;/a-entity&gt;
+
+    &lt;/a-scene&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+  <h3>How It Works</h3>
+  <ul>
+    <li><code>toggle-text-on-click</code> shows a description when clicking an image.</li>
+    <li><code>&lt;a-assets&gt;</code> preloads textures and images for frames and walls.</li>
+    <li><code>&lt;a-sky&gt;</code> sets the museum background (360° image).</li>
+    <li>Images are wrapped in virtual frames to simulate a real gallery.</li>
+  </ul>
+</section>
+
+    
   </main>
 </body>
 </html>
