@@ -181,20 +181,22 @@
 
     <section id="snippet11">
   <h2>VR Room</h2>
-  <pre><code>&lt;a-scene&gt;
-  &lt;a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"&gt;&lt;/a-box&gt;
-  &lt;a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"&gt;&lt;/a-sphere&gt;
-  &lt;a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"&gt;&lt;/a-cylinder&gt;
-  &lt;a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"&gt;&lt;/a-plane&gt;
-  &lt;a-sky color="#ECECEC"&gt;&lt;/a-sky&gt;
-&lt;/a-scene&gt;</code></pre>
-  <h3>Explanation</h3>
-  <ul>
-    <li><code>&lt;a-box&gt;</code>, <code>&lt;a-sphere&gt;</code>, and <code>&lt;a-cylinder&gt;</code> are basic 3D shapes.</li>
-    <li><code>&lt;a-plane&gt;</code> creates a ground surface.</li>
-    <li><code>&lt;a-sky&gt;</code> gives the background color to the scene.</li>
-  </ul>
+  <pre><code>&lt;html&gt;
+  &lt;head&gt;
+    &lt;script src="https://aframe.io/releases/1.7.0/aframe.min.js"&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;a-scene&gt;
+      &lt;a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"&gt;&lt;/a-box&gt;
+      &lt;a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"&gt;&lt;/a-sphere&gt;
+      &lt;a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"&gt;&lt;/a-cylinder&gt;
+      &lt;a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"&gt;&lt;/a-plane&gt;
+      &lt;a-sky color="#ECECEC"&gt;&lt;/a-sky&gt;
+    &lt;/a-scene&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
 </section>
+
 
     <section id="snippet12">
   <h2>VR Museum</h2>
