@@ -71,6 +71,7 @@
     <a href="#snippet10">Gaze Based Interaction</a>
     <a href="#snippet11">VR Room Solution</a>
     <a href="#snippet12">VR Museum</a> 
+    <a href="#snippet13">Import Model </a>
   </nav>
 
   <main>
@@ -256,6 +257,39 @@
   </ul>
 </section>
 
+    <section id="snippet13">
+  <h2>Import Model</h2>
+  <pre><code>&lt;html&gt;
+  &lt;head&gt;
+    &lt;script src="https://aframe.io/releases/1.7.0/aframe.min.js"&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;a-scene&gt;
+      &lt;a-plane
+        position="0 0 -4"
+        rotation="-90 0 0"
+        width="4"
+        height="4"
+        color="#7BC8A4"&gt;
+      &lt;/a-plane&gt;
+
+      &lt;!-- change src="tinker.glb" to your model file --&gt;
+      &lt;a-assets&gt;
+        &lt;a-asset-item id="myModel" src="tinker.glb"&gt;&lt;/a-asset-item&gt;
+      &lt;/a-assets&gt;
+
+      &lt;a-entity
+        gltf-model="#myModel"
+        scale="10 10 10"
+        position="0 0 -4"
+        rotation="0 0 0"&gt;
+      &lt;/a-entity&gt;
+
+      &lt;a-sky color="#ECECEC"&gt;&lt;/a-sky&gt;
+    &lt;/a-scene&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</section>
     
   </main>
   <footer style="background-color: #FFF3B0; color: #00204E; padding: 20px; text-align: center; font-family: Arial, sans-serif; margin-top: 40px;">
